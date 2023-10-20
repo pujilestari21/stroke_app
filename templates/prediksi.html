@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortality</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: lightskyblue;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="80">
+                Mortality
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h2 class="text-center">Predicting Mortality</h2>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-start">
+                        <div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+                            <div class="col-md-6">
+                                <form action="{{ url_for('result') }}" method="POST">
+                                    <div class="mb-3">
+                                        <label for="Lenght of hospitalization" class="form-label">Lenght of Hospitalization</label>
+                                        <select class="form-select" id="Lenght of hospitalization" name="Lenght of hospitalization" required>
+                                            <option value="0">Lenght of Hospitalization <= 7 Days</option>
+                                            <option value="1">Lenght of Hospitalization > 7 Days</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Age" class="form-label">Umur / <em>Age</em></label>
+                                        <input type="number" step="1" class="form-control" id="Age" name="Age" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Gender" class="form-label">Jenis Kelamin / <em>Gender</em></label>
+                                        <select class="form-select" id="Gender" name="Gender" required>
+                                            <option value="0">Laki-Laki / <em>Male</em></option>
+                                            <option value="1">Perempuan / <em>Female</em></option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Debtor" class="form-label">Debitur / <em>Debtor</em></label>
+                                        <select class="form-select" id="Debtor" name="Debtor" required>
+                                            <option value="0">BPJS NON PBI</option>
+                                            <option value="1">BPJS PBI</option>
+                                            <option value="3">UMUM</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="History of Cardiovascular Disease" class="form-label">Riwayat Penyakit KV / <em>History of Cardiovascular Disease</em></label>
+                                        <select class="form-select" id="History of Cardiovascular Disease" name="History of Cardiovascular Disease" required>
+                                            <option value="0">Tidak Mempunyai Riwayat Penyakit KV</option>
+                                            <option value="1">Mempunyai 1 Riwayat Penyakit KV</option>
+                                            <option value="2">Mempunyai 2 Riwayat Penyakit KV</option>
+                                            <option value="3">Mempunyai 3 Riwayat Penyakit KV</option>
+                                            <option value="4">Mempunyai 4 Riwayat Penyakit KV</option>
+                                            <option value="5">Mempunyai 5 Riwayat Penyakit KV</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Past Medical History" class="form-label">Riwayat Penyakit Dahulu / <em>Past Medical History</em></label>
+                                        <select class="form-select" id="Past Medical History" name="Past Medical History" required>
+                                            <option value="0">Tidak Mempunyai Riwayat Penyakit Dahulu</option>
+                                            <option value="1">Mempunyai 1 Riwayat Penyakit Dahulu</option>
+                                            <option value="2">Mempunyai 2 Riwayat Penyakit Dahulu</option>
+                                            <option value="3">Mempunyai 3 Riwayat Penyakit Dahulu</option>
+                                            <option value="4">Mempunyai 4 Riwayat Penyakit Dahulu</option>
+                                            <option value="5">Mempunyai 5 Riwayat Penyakit Dahulu</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Previous Stroke History" class="form-label">Riwayat Stroke Sebelumnya / <em>Previous Stroke History</em></label>
+                                        <select class="form-select" id="Previous Stroke History" name="Previous Stroke History" required>
+                                            <option value="0">Tidak Mempunyai Riwayat Stroke</option>
+                                            <option value="1">Mempunyai 1 Riwayat Stroke</option>
+                                            <option value="2">Mempunyai 2 Riwayat Stroke</option>
+                                            <option value="3">Mempunyai 3 Riwayat Stroke</option>
+                                            <option value="4">Mempunyai 4 Riwayat Stroke</option>
+                                            <option value="5">Mempunyai 5 Riwayat Stroke</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="HB" class="form-label">Hemoglobin (HB)</label>
+                                        <input type="number" step="0.01" class="form-control" id="HB" name="HB" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="HT" class="form-label">Hematokrit (HT)</label>
+                                        <input type="number" step="0.01" class="form-control" id="HT" name="HT" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="LEU" class="form-label">Leukosit (LEU)</label>
+                                        <input type="number" step="0.01" class="form-control" id="LEU" name="LEU" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="TR" class="form-label">Trombosit (TR)</label>
+                                        <input type="number" step="1" class="form-control" id="TR" name="TR" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="NLR" class="form-label">Neutrophil-Lymphocyte Ratio (NLR)</label>
+                                        <input type="number" step="0.01" class="form-control" id="NLR" name="NLR" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Chol Total" class="form-label">Kolestrol Total (Chol Total) / <em>Total Cholesterol</em></label>
+                                        <input type="number" step="0.01" class="form-control" id="Chol Total" name="Chol Total" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="HDL" class="form-label">High-Density Lipoprotein (HDL)</label>
+                                        <input type="number" step="0.01" class="form-control" id="HDL" name="HDL" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="TG" class="form-label">Triglisireda (TG)</label>
+                                        <input type="number" step="0.01" class="form-control" id="TG" name="TG" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="LDL" class="form-label">Low-Density Lipoprotein (LDL)</label>
+                                        <input type="number" step="0.01" class="form-control" id="LDL" name="LDL" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Stroke Location" class="form-label">Lokasi Stroke / <em>Stroke Location</em></label>
+                                        <select class="form-select" id="Stroke Location" name="Stroke Location" required>
+                                            <option value="40">ATROPHY CEREBRI</option>
+                                            <option value="44">INFARK CEREBRI DI CAPSULA EXTERNA SINISTRA</option>
+                                            <option value="55">INFARK CEREBRI DI CAPSULA EXTERNA DEXTRA</option>
+                                            <option value="5">INFARK CEREBRI DI CORONA RADIATA DEXTRA</option>
+                                            <option value="45">INFARK CEREBRI DI CORONA RADIATA SINISTRA</option>
+                                            <option value="10">INFARK CEREBRI DI FRONTO TEMPORAL DEXTRA</option>
+                                            <option value="16">INFARK CEREBRI DI FRONTO TEMPORALIS DEXTRA</option>
+                                            <option value="24">INFARK CEREBRI DI FRONTAL SINISTRA DAN CORONA</option>
+                                            <option value="54">INFARK CEREBRI DI FRONTALIS DEXTRA</option>
+                                            <option value="25">INFARK CEREBRI DI FOSSA CEREBRI POSTERIOR</option>
+                                            <option value="20">INFARK CEREBRI DI GANGLIA BASALIS DEXTRA</option>
+                                            <option value="26">INFARK CEREBRI DI OCIPITALIS SINISTRA</option>
+                                            <option value="50">INFARK CEREBRI DI OCCIPITALIS SINISTRA</option>
+                                            <option value="41">INFARK CEREBRI DI OCCIPITO PARIENTAL DEXTRA</option>
+                                            <option value="51">INFARK CEREBRI DI OCCIPITO PERIENTALIS DEXTRA</option>
+                                            <option value="1">INFARK CEREBRI DI PARIETALIS BILATERAL DEXTRA</option>
+                                            <option value="17">INFARK CEREBRI DI PARIETALIS DAN CAPSULA EXTERNA</option>
+                                            <option value="35">INFARK CEREBRI DI PARIETALIS DAN GANGLIA BASALIS DEXTRA</option>
+                                            <option value="12">INFARK CEREBRI DI PARIETALIS DEXTRA</option>
+                                            <option value="13">INFARK CEREBRI DI PARIETALIS SINISTRA DAN INTRAPONTINE</option>
+                                            <option value="4">INFARK CEREBRI DI PARIETALIS SINISTRA DAN TEMPORO PARIETALIAS DEXTRA</option>
+                                            <option value="18">INFARK CEREBRI DI PARITALIS SINISTRA</option>
+                                            <option value="32">INFARK CEREBRI DI PARIETALIS SINISTRA</option>
+                                            <option value="43">INFARK CEREBRI DI PARIETA OCCIPITALIS SINISTRA </option>
+                                            <option value="14">INFARK CEREBRI DI REGIO TEMPORAL DEXTRA</option>
+                                            <option value="11">INFARK CEREBRI DI REGIO TEMPORO PARIENTAL SINISTRA</option>
+                                            <option value="6">INFARK CEREBRI DI TEMPORAL DEXTRA</option>
+                                            <option value="39">INFARK CEREBRI DI TEMPORAL SINISTRA</option>
+                                            <option value="36">INFARK CEREBRI DI TEMPORO OCCIPITAL DEXTRA</option>
+                                            <option value="31">INFARK CEREBRI DI TEMPORO OCCIPITALE SINISTRA</option>
+                                            <option value="33">INFARK CEREBRI DI TEMPORO OCIPITALIS SINISTRA</option>
+                                            <option value="48">INFARK CEREBRI DI TEMPORO PARIETALIS DEXTRA</option>
+                                            <option value="42">INFARK CEREBRI DI TEMPORO PARIETALIS DEXTRA</option>
+                                            <option value="9">INFARK CEREBRI DI TEMPORO PARIETALIS SINISTRA</option>
+                                            <option value="56">INFARK CEREBRIL DI CORONA RADIATA SINISTRA</option>
+                                            <option value="57">INFARK CEREBRI DI OCCIPATALIS SINISTRA</option>
+                                            <option value="58">INFARK CEREBRI DI TEMPORO OCCIPITALE DEXTRA</option>
+                                            <option value="63">INFARK CEREBRI DEXTRA</option>
+                                            <option value="64">INFARK CEREBRI DI GANGLIA BASALIS</option>
+                                            <option value="65">INFARK CEREBRI DI THALAMUS DEXTRA</option>
+                                            <option value="37">INFARK CEREBRI INTRAPONTINE DAN OCCIPITALIS</option>
+                                            <option value="7">INFARK CEREBRI MULTIPLE</option>
+                                            <option value="67">INFARK CEREBRI DI FRONTO PARIETALIS DEXTRA</option>
+                                            <option value="69">INFARK CEREBRI DI CAPSULA INTERNA DEXTRA</option>
+                                            <option value="70">INFARK CEREBRI DI OCCUPITO PARIETALIS DEXTRA</option>
+                                            <option value="23">LACUNAR DI THALAMUS DEXTRA</option>
+                                            <option value="53">LACUNAR INFARK DI THALAMUS DEXTRA</option>
+                                            <option value="46">LACUNER INFARK DI FRONTALIS SINISTRA</option>
+                                            <option value="3">LACUNER INFARK DI FRONTALIS DAN PARIETALIS</option>
+                                            <option value="21">LACUNER INFARK DI GANGLIA BASALIS DEXTRA</option>
+                                            <option value="8">LACUNER INFARK DI GANGLIA BASALIS SINISTRA</option>
+                                            <option value="28">LACUNER INFARK MULTIPLE DI PARIETALIS SINISTRA</option>
+                                            <option value="52">LACUNER INFARK DI CORPUS COLLOSUM ANTERIOR</option>
+                                            <option value="38">LACUNER INFARK DI PARIETA OCCIPITALIS SINISTRA</option>
+                                            <option value="30">LACUNER INFARK DI PARIETALIS BILATERAL</option>
+                                            <option value="22">LACUNER INFARK DI PARIETALIS DEXTRA</option>
+                                            <option value="49">LACUNER INFARK DI PARITALIS DAN GANGLIA BASALIS DEXTRA</option>
+                                            <option value="2">LACUNER INFARCK DI PARIETALIS PERIVENTRIKULER</option>
+                                            <option value="27">LACUNER INFARK DI PARIETALIS SINISTRA</option>
+                                            <option value="29">LACUNER INFARK DI THALAMUS BILATERAL</option>
+                                            <option value="15">LACUNER INFARK DI THALAMUS DEXTRA</option>
+                                            <option value="47">LACUNER INFARK DI THALAMUS SINISTRA</option>
+                                            <option value="59">LACUNER INFARK DI CAPSULA INTERNA SINISTRA</option>
+                                            <option value="61">LACUNER INFARK DI TEMPORALIS SINISTRA</option>
+                                            <option value="62">LACUNER INFARK DI NUCLEUS CAUDATUS SINISTRA</option>
+                                            <option value="60">LACUNER INFARK INTAPONTINE DEXTRA</option>
+                                            <option value="34">LACUNER INFARK MULTIPLE DI PARIETALIS DEXTRA</option>
+                                            <option value="66">LACUNER INFARK INTROPONTINE DEXTRA</option>
+                                            <option value="68">LACUNER INFARK MULTIPLE DI THALAMUS BILATERAL</option>
+                                            <option value="19">LACUNER INFARK MULTIPLE DI PARETALIS DAN GANGLIA BASALIS BILATERAL</option>
+                                        </select>
+                                    <div class="mt-5">
+                                        <button type="submit" class="btn btn-primary">Predict</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 25px;
+        }
+        .jumbotron {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40; 
+            color: #fff; 
+            text-align: center;
+            padding: 10px 0; 
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height="80">
+                Welcome!
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron text-center">
+        <h2>Welcome to the website for predictions of mortality and length of hospitalization stroke patients</h2>
+        <p>Rumah Sakit Umum Daerah Banyumas</p>
+        <div class="container">
+            <a class="btn btn-primary btn-lg my-3" href="{{ url_for('prediksi') }}" role="button">Start Prediction Mortality</a>
+        </div>
+        <div class="container">
+            <a class="btn btn-primary btn-lg my-3" href="{{ url_for('prediksi_lama_rawat_inap') }}" role="button">Start Prediction Length of Hospitalization</a>
+        </div>
+    </div>
+    <div class="container my-5 py-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>About Us</h2>
+                <p>Rumah Sakit Umum Daerah Banyumas</p>
+                <p>Jl Rumah Sakit No. 1, Kejawar, Banyumas, Kabupaten Banyumas, Jawa Tengah</p>
+            </div>
+            <div class="col-md-6">
+                <h2>Our Services</h2>
+                <ul>
+                    <li>Emergency Services</li>
+                    <li>Diagnostic Services</li>
+                    <li>Pharmacy Services</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark text-light text-center py-3">
+        &copy; 2023 RSUD Banyumas
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
